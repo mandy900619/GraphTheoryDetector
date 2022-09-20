@@ -14,9 +14,4 @@ def parameter_parser():
                         default='.',
                         help='input binary file.')
 
-    # parser.add_argument('--start-index',
-    #                     nargs='?',
-    #                     default=0,
-    #                     help='input binary file.')
-
     return parser.parse_args()
