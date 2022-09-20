@@ -64,12 +64,12 @@ def Scaling(feature):
     feature = scaler.transform(feature)
     return feature
 
-def Predict(X,clf):
+def Predict(X,clf,MDorFC):
     '''
     param: X (feature vector)
     return: y (label), 0 for benign, 1 for malware
     '''
-    model = load(clf+'.joblib')
+    model = load('./' +MDorFC+'_Model/'+clf+'.joblib')
     label = model.predict(X)
     return label
 
@@ -92,7 +92,7 @@ def main(args):
 
     feature = np.array(feature).reshape(1,-1)
     feature = Scaling(feature)  
-    result = Predict(feature,args.model)
+    result = Predict(feature,args.model,args.MDorFC)
     
     print(result)
 
