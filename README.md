@@ -6,25 +6,39 @@
 
 ### Description
 
-* Input a binary file
-* Output its label predicted by ML model
+* The main program is a malware detector.
 
-### Feature Construction
+  * **Input** : a binary file
 
-* generate FCG
+  * **Output** : its label predicted by ML model
+  * **Flow** : 
+    * reverse the bin and extract the feature
+    * load the model
+    * predict
 
-* extract the attribute of graph:
 
-  1. number of nodes
-  2. number of edges
-  3. density
-  4. -8. (mean, max, min, median, std) of closeness_centrality
+### Feature Extraction
 
-  9. -13. (mean, max, min, median, std) of betweenness_centrality
+* We reverse the binary file to function call graph(FCG) by r2pipe, then extract the attribute of FCG:
 
-  14. -18. (mean, max, min, median, std) of degree_centrality
+  * number of nodes
 
-  19. -23. (mean, max, min, median, std) of shortestpaths.avglen 
+  * number of edges
+
+  * density
+
+  * (mean, max, min, median, std) of closeness_centrality
+
+
+  * (mean, max, min, median, std) of betweenness_centrality
+
+
+  * (mean, max, min, median, std) of degree_centrality
+
+
+  * (mean, max, min, median, std) of shortestpaths.avglen 
+
+  The dimension of feature is 23.
 
 
 ## Requirements
@@ -40,7 +54,7 @@
 
 ## Files
 
-* **FeatureConstruction** : some code about gpickle to feature.csv
+* **FeatureConstruction** : some code about gpickle to feature.csv (for training, validation)
 * **Modeling** : some code about training and saving the model
 * **MD(FC)_Model** : save the model with .joblib, e.g. 'rf.joblib'
 * **TestingBin** : some binary for testing
@@ -48,7 +62,7 @@
 
 - **graphity.py** : module for feature extraction
 - **param_parser.py** : for parsing args
-- **scaler.joblib** : 
+- **scaler.joblib** : scale the feature vector
 
 ## Usage
 
@@ -64,12 +78,18 @@
   python main.py --model [MODEL]
   ```
 
-  MODEL can be rf, knn, svm, mlp
+  MODEL can be rf, knn, svm, mlp, default: mlp
+
+* if you wanna do family classification
+
+  ```
+  python main.py --MDorFC FC
+  ```
 
 * e.g.
 
   ```
-  python -W ignore main.py --input-path .\test_data\1100a1693fbe43b0ff29c1d5a36011421752e162171683a7053cc1a342cdb11a --model svm
+  python -W ignore main.py --input-path .\TestingBin\1100a1693fbe43b0ff29c1d5a36011421752e162171683a7053cc1a342cdb11a --model svm --MDorFC FC
   ```
 
   * ignore the warning message by using '-W ignore'
