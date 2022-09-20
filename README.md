@@ -96,11 +96,20 @@
 
 
 
-## Result of training
+## Result of Malware Detection
 
-|    Models    | Accuracy | Precision | Recall | F1_score | Time cost |
-| :----------: | :------: | :-------: | :----: | :------: | :-------: |
-| RandomForest |  0.965   |   0.968   | 0.965  |  0.965   |   0.64    |
-|     KNN      |  0.953   |   0.953   | 0.953  |  0.953   |   6.01    |
-|     SVM      |  0.824   |   0.827   | 0.822  |  0.823   |   41.22   |
-|     MLP      |  0.871   |   0.871   | 0.871  |  0.871   |   0.66    |
+|    Models    | Accuracy | Time cost |
+| :----------: | :------: | :-------: |
+| RandomForest |   0.97   |   5.01    |
+|     KNN      |  0.967   |  165.51   |
+|     SVM      |  0.772   |  1606.21  |
+|     MLP      |  0.879   |   49.51   |
+
+## Result of Family Classification
+
+|    Models    | Accuracy | Time cost |
+| :----------: | :------: | :-------: |
+| RandomForest |   0.97   |   4.21    |
+|     KNN      |  0.967   |  104.92   |
+|     SVM      |  0.772   |  1562.06  |
+|     MLP      |  0.879   |   70.99   |
