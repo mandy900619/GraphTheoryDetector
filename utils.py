@@ -8,7 +8,7 @@ def parameter_parser():
         args.input_path : str
         args.output_path : str
         args.classify : bool
-        args.model : model
+        args.model : str
     '''
     # update the description with your detector name
     parser = argparse.ArgumentParser(description="Run GraphTheoryDetector.")
