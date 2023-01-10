@@ -31,7 +31,7 @@ def parameter_parser():
     parser.add_argument('-c', '--classify', action='store_true',
                         help='apply the family classifier')
 
-    parser.add_argument('-m', '--model', type=str, metavar='[rf | knn | svm | mlp]', default='mlp',
+    parser.add_argument('-m', '--model', type=str, metavar='[ rf | knn | svm | mlp ]', default='mlp',
                         help='model to predict')
 
     parser.add_argument('-o', '--output-path', type=str, metavar='<path>', 
