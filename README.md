@@ -15,6 +15,7 @@
     * reverse the bin and extract the feature
     * load the model
     * predict
+    * write the result -> output csv file
 
 
 ### Feature Extraction
@@ -65,32 +66,19 @@
 - **scaler.joblib** : scale the feature vector
 
 ## Usage
-
-* setting path of input file
-
-  ```
-  python main.py --input-path [FILE_PATH]
-  ```
-
-* select the model
-
-  ```
-  python main.py --model [MODEL]
-  ```
-
-  MODEL can be rf, knn, svm, mlp, default: mlp
-
-* if you wanna do family classification
-
-  ```
-  python main.py --MDorFC FC
-  ```
+* input binary: `-i <path>`, `--input-path <path>`
+* model: `-m <model>`, `--model <model>`
+* output (record): `-o <path>`, `--output-path <path>`
+* Malware Detection / Family Classification
+    * if you wanna do malware detection(binary clf) -> do nothing
+    * else if (wanna do family classification) -> `-c`
+* e.g.
+    `python -i testingBin/0021eaf2 -o myDetector_FC_records.csv -m rf -c`
+    * using trained rf family classifier(`-c`), predict '0021eaf2' and write the result to 'myDetector_FC_records.csv'
 
 * e.g.
 
-  ```
-  python -W ignore main.py --input-path .\TestingBin\1100a1693fbe43b0ff29c1d5a36011421752e162171683a7053cc1a342cdb11a --model svm --MDorFC FC
-  ```
+  `python -W ignore main.py -i .\TestingBin\1100a1693fbe43b0ff29c1d5a36011421752e162171683a7053cc1a342cdb11a -o GraphTheoryDetector_FC_Test.csv -m mlp -c`
 
   * ignore the warning message by using '-W ignore'
 
