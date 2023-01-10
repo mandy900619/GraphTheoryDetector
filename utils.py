@@ -1,5 +1,6 @@
 import argparse
 import os
+
 def parameter_parser():
     '''
     to get the param in cmd
@@ -56,14 +57,14 @@ def write_output(input_path,output_path,result,labels):
     # init the columns of this table if it is a new csv file
     if not os.path.exists(output_path):
         with open(output_path,'w') as f:
-            line = 'FILENAME, '
+            line = 'Filename, '
             line += ', '.join(labels)
             line += '\n'
             f.write(line)
-            
+
     # write the result 
     with open(output_path,'a+') as f:
-        line = input_path+', '
+        line = os.path.basename(input_path) + ', '
         line += ','.join(list(str(i) for i in result))
         line += '\n'
         f.write(line)

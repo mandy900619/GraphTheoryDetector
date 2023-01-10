@@ -3,7 +3,9 @@ import numpy as np
 import networkx as nx
 import r2pipe
 from joblib import load
-from param_parser import parameter_parser
+
+from utils import parameter_parser
+from utils import write_output
 
 def bin2fcg(path):
     '''
@@ -64,38 +66,53 @@ def Scaling(feature):
     feature = scaler.transform(feature)
     return feature
 
-def Predict(X,clf,MDorFC):
+def Predict(X,clf,is_family_classification):
     '''
     param: X (feature vector)
     return: y (label), 0 for benign, 1 for malware
     '''
-    model = load('./' +MDorFC+'_Model/'+clf+'.joblib')
-    label = model.predict(X)
-    return label
+    if is_family_classification:
+        model = load('./FC_Model/'+clf+'.joblib')
+    else:
+        model = load('./MD_Model/'+clf+'.joblib')
+
+    result = model.predict_proba(X).tolist()[0]
+    return result
 
 def main(args):
-    # print(args.input_path)
-    # print(args.model)
+    result = [-1] # default: fail to predict -> -1
+    
+    # init the labels
+    labels = ['BenignWare','Malware']
+    if args.classify:
+        labels = ['BenignWare', 'Mirai', 'Bashlite', 'Unknown', 'Android', 'Tsunami', 'Dofloo', 'Xorddos', 'Hajime', 'Pnscan']
+
+    # extract FCG from binary
     try:
         dotString = bin2fcg(args.input_path)
     except:
         print('fail to extract the FCG.')
-        print(0)
-        return 0
+        print(result)
+        write_output(args.input_path, args.output_path, result, labels)
+        return result
     
+    # extract feature vector from FCG
     try:
         feature = Extract_feature(dotString)
     except:
         print('fail to extract the feature.')
-        print(0)
-        return 0
+        print(result)
+        write_output(args.input_path, args.output_path, result, labels)
+        return result
 
+    # prediction
     feature = np.array(feature).reshape(1,-1)
     feature = Scaling(feature)  
-    result = Predict(feature,args.model,args.MDorFC)
+    result = Predict(feature,args.model,args.classify)
     
+    # output
     print(result)
-
+    write_output(args.input_path, args.output_path, result, labels)
     return result
 
 
