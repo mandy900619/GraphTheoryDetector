@@ -11,12 +11,12 @@
   * **Input** : a binary file
   * **Output** : prob. of each class predicted by ML model
   * **Flow** : 
+    ![](flow.jpg)
     * reverse the bin and extract the feature
     * load the model
     * predict
     * print the result
     * write the result -> output csv file
-
 
 ### Feature Extraction
 
