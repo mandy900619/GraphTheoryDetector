@@ -65,6 +65,7 @@
 * **scaler.joblib** : scale the feature vector
 
 ## Usage
+* unzip models to `FC_Model` and `MD_Model`: `make`
 * input binary: `-i <path>`, `--input-path <path>`
 * model: `-m <model>`, `--model <model>`
   * rf, mlp, knn, svm
