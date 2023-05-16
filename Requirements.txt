@@ -1,8 +1,0 @@
-* python3
-* radare2
-* python package
-  * r2pipe
-  * networkx
-  * joblib
-  * argparse
-  * sklearn
