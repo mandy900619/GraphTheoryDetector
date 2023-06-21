@@ -32,6 +32,7 @@ from sklearn.manifold import TSNE
 from sklearn.model_selection import StratifiedKFold
 from sklearn.linear_model import LogisticRegression
 from matplotlib import pyplot
+from sklearn.metrics import confusion_matrix
 import sklearn.metrics as sm
 import seaborn as sns
 import time
@@ -53,6 +54,38 @@ def RF(Feature, Label, n_estimators):
     print("Precision:", precision_score(Y_test, y_predicted, average='macro'))
     print("Recall:", recall_score(Y_test, y_predicted, average='macro'))
     print("F1_score:", f1_score(Y_test, y_predicted, average='macro'))
+    try:
+        TN, FP, FN, TP = confusion_matrix(Y_test, y_predicted).ravel()
+        FPR = FP / (FP + TN)
+        FNR = FN / (FN + TP)
+        print("False Positive: ", FP)
+        print("False Positive Rate: ", FPR)
+        print("False Negative: ", FN)
+        print("False Negative Rate: ", FNR)
+    except:
+        num_classes = len(set(Label))
+        tn = [0] * num_classes
+        fp = [0] * num_classes
+        fn = [0] * num_classes
+        tp = [0] * num_classes
+        fpr = [0] * num_classes
+        fnr = [0] * num_classes
+        cm = confusion_matrix(Y_test, y_predicted)
+        for i in range(num_classes):
+            class_indices = [j for j in range(num_classes) if j != i]
+
+            fp[i] = sum(cm[class_indices, i])
+            tn[i] = sum(cm[class_indices][:, class_indices].flatten())
+            fpr[i] = fp[i] / (fp[i] + tn[i])
+
+            fn[i] = sum(cm[i, class_indices])
+            tp[i] = cm[i, i]
+            fnr[i] = fn[i] / (fn[i] + tp[i])
+        print("False Positive: ", fp)
+        print("False Positive Rate: ", fpr)
+        print("False Negative: ", fn)
+        print("False Negative Rate: ", fnr)
+
     print("--- %s seconds ---" % (time.time() - start_time))
     return forest, [accuracy_score(Y_test, y_predicted), precision_score(Y_test, y_predicted, average='macro'), recall_score(Y_test, y_predicted, average='macro'), f1_score(Y_test, y_predicted, average='macro')]
 
@@ -70,6 +103,37 @@ def KNN(Feature, Label, neighbors):
     print("Precision:", precision_score(Y_test, y_predicted, average='macro'))
     print("Recall:", recall_score(Y_test, y_predicted, average='macro'))
     print("F1_score:", f1_score(Y_test, y_predicted, average='macro'))
+    try:
+        TN, FP, FN, TP = confusion_matrix(Y_test, y_predicted).ravel()
+        FPR = FP / (FP + TN)
+        FNR = FN / (FN + TP)
+        print("False Positive: ", FP)
+        print("False Positive Rate: ", FPR)
+        print("False Negative: ", FN)
+        print("False Negative Rate: ", FNR)
+    except:
+        num_classes = len(set(Label))
+        tn = [0] * num_classes
+        fp = [0] * num_classes
+        fn = [0] * num_classes
+        tp = [0] * num_classes
+        fpr = [0] * num_classes
+        fnr = [0] * num_classes
+        cm = confusion_matrix(Y_test, y_predicted)
+        for i in range(num_classes):
+            class_indices = [j for j in range(num_classes) if j != i]
+
+            fp[i] = sum(cm[class_indices, i])
+            tn[i] = sum(cm[class_indices][:, class_indices].flatten())
+            fpr[i] = fp[i] / (fp[i] + tn[i])
+
+            fn[i] = sum(cm[i, class_indices])
+            tp[i] = cm[i, i]
+            fnr[i] = fn[i] / (fn[i] + tp[i])
+        print("False Positive: ", fp)
+        print("False Positive Rate: ", fpr)
+        print("False Negative: ", fn)
+        print("False Negative Rate: ", fnr)
     print("--- %s seconds ---" % (time.time() - start_time))
     return neigh, [accuracy_score(Y_test, y_predicted), precision_score(Y_test, y_predicted, average='macro'), recall_score(Y_test, y_predicted, average='macro'), f1_score(Y_test, y_predicted, average='macro')]
 
@@ -86,6 +150,37 @@ def SVM(Feature, Label, C, gamma):
     print("Precision:", precision_score(Y_test, y_predicted, average='macro'))
     print("Recall:", recall_score(Y_test, y_predicted, average='macro'))
     print("F1_score:", f1_score(Y_test, y_predicted, average='macro'))
+    try:
+        TN, FP, FN, TP = confusion_matrix(Y_test, y_predicted).ravel()
+        FPR = FP / (FP + TN)
+        FNR = FN / (FN + TP)
+        print("False Positive: ", FP)
+        print("False Positive Rate: ", FPR)
+        print("False Negative: ", FN)
+        print("False Negative Rate: ", FNR)
+    except:
+        num_classes = len(set(Label))
+        tn = [0] * num_classes
+        fp = [0] * num_classes
+        fn = [0] * num_classes
+        tp = [0] * num_classes
+        fpr = [0] * num_classes
+        fnr = [0] * num_classes
+        cm = confusion_matrix(Y_test, y_predicted)
+        for i in range(num_classes):
+            class_indices = [j for j in range(num_classes) if j != i]
+
+            fp[i] = sum(cm[class_indices, i])
+            tn[i] = sum(cm[class_indices][:, class_indices].flatten())
+            fpr[i] = fp[i] / (fp[i] + tn[i])
+
+            fn[i] = sum(cm[i, class_indices])
+            tp[i] = cm[i, i]
+            fnr[i] = fn[i] / (fn[i] + tp[i])
+        print("False Positive: ", fp)
+        print("False Positive Rate: ", fpr)
+        print("False Negative: ", fn)
+        print("False Negative Rate: ", fnr)
     print("--- %s seconds ---" % (time.time() - start_time))
     return clf, [accuracy_score(Y_test, y_predicted), precision_score(Y_test, y_predicted, average='macro'), recall_score(Y_test, y_predicted, average='macro'), f1_score(Y_test, y_predicted, average='macro')]
 
@@ -105,6 +200,37 @@ def MLP(Feature, Label, hidden_layer_sizes, iterations):
     print("Precision:", precision_score(Y_test, y_predicted, average='macro'))
     print("Recall:", recall_score(Y_test, y_predicted, average='macro'))
     print("F1_score:", f1_score(Y_test, y_predicted, average='macro'))
+    try:
+        TN, FP, FN, TP = confusion_matrix(Y_test, y_predicted).ravel()
+        FPR = FP / (FP + TN)
+        FNR = FN / (FN + TP)
+        print("False Positive: ", FP)
+        print("False Positive Rate: ", FPR)
+        print("False Negative: ", FN)
+        print("False Negative Rate: ", FNR)
+    except:
+        num_classes = len(set(Label))
+        tn = [0] * num_classes
+        fp = [0] * num_classes
+        fn = [0] * num_classes
+        tp = [0] * num_classes
+        fpr = [0] * num_classes
+        fnr = [0] * num_classes
+        cm = confusion_matrix(Y_test, y_predicted)
+        for i in range(num_classes):
+            class_indices = [j for j in range(num_classes) if j != i]
+
+            fp[i] = sum(cm[class_indices, i])
+            tn[i] = sum(cm[class_indices][:, class_indices].flatten())
+            fpr[i] = fp[i] / (fp[i] + tn[i])
+
+            fn[i] = sum(cm[i, class_indices])
+            tp[i] = cm[i, i]
+            fnr[i] = fn[i] / (fn[i] + tp[i])
+        print("False Positive: ", fp)
+        print("False Positive Rate: ", fpr)
+        print("False Negative: ", fn)
+        print("False Negative Rate: ", fnr)
     print("--- %s seconds ---" % (time.time() - start_time))
     return mlp, [accuracy_score(Y_test, y_predicted), precision_score(Y_test, y_predicted, average='macro'), recall_score(Y_test, y_predicted, average='macro'), f1_score(Y_test, y_predicted, average='macro')]
 
@@ -330,6 +456,8 @@ def SVM_cross_validation(Feature, Label, C, gamma):
 This cross-validation object is a variation of KFold that returns stratified folds.
 The folds are made by preserving the percentage of samples for each class.
 '''
+
+
 def Stratified_CV_RF(Feature, Label, n_estimators, cv):
     Result = []
     skf = StratifiedKFold(n_splits=cv)
@@ -343,7 +471,7 @@ def Stratified_CV_RF(Feature, Label, n_estimators, cv):
 
         forest.fit(Train_Feature, Train_Label)
         y_predicted = forest.predict(Test_Feature)
-        
+
         Result.append([accuracy_score(Test_Label, y_predicted), precision_score(Test_Label, y_predicted, average='macro'), recall_score(
             Test_Label, y_predicted, average='macro'), f1_score(Test_Label, y_predicted, average='macro')])
         round_c += 1
